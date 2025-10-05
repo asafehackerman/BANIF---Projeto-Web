@@ -8,20 +8,21 @@ export default class extends BaseSchema {
       table.increments('id')
       table
         .integer('tokenable_id')
-        .notNullable()
         .unsigned()
+        .notNullable()
         .references('id')
-        .inTable('users')
+        .inTable('usuarios')
         .onDelete('CASCADE')
 
       table.string('type').notNullable()
       table.string('name').nullable()
       table.string('hash').notNullable()
       table.text('abilities').notNullable()
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
-      table.timestamp('last_used_at').nullable()
-      table.timestamp('expires_at').nullable()
+
+      table.datetime('created_at').notNullable()
+      table.datetime('updated_at').nullable()
+      table.datetime('last_used_at').nullable()
+      table.datetime('expires_at').nullable()
     })
   }
 
