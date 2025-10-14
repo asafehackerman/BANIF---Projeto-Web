@@ -1,21 +1,21 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import Usuario from '#models/usuario'
-import Investimento from '#models/investimento'
 import ContaCorrente from '#models/conta_corrente'
+import Investimento from '#models/investimento'
+import Usuario from '#models/usuario'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { DateTime } from 'luxon'
 
 export default class Transacao extends BaseModel {
   public static table = 'transacoes'
 
+  @column.dateTime({ autoCreate: true })
+  declare created_at: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updated_at: DateTime
+
   @column({ isPrimary: true })
   declare transacao_id: number
-
-  @column()
-  declare transacao_tipo: string
-
-  @column()
-  declare transacao_valor: number
 
   @column()
   declare investimento_id: number | null
@@ -29,11 +29,11 @@ export default class Transacao extends BaseModel {
   @column()
   declare conta_destino_id: number | null
 
-  @column.dateTime({ autoCreate: true })
-  declare created_at: DateTime
+  @column()
+  declare tipo: string
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updated_at: DateTime
+  @column()
+  declare valor: number  
 
   // Relações
   @belongsTo(() => Usuario, { foreignKey: 'usuario_id' })

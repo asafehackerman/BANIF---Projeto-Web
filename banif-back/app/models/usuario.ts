@@ -1,9 +1,9 @@
-import { DateTime } from 'luxon'
-import hash from '@adonisjs/core/services/hash'
-import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
-import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
+import { compose } from '@adonisjs/core/helpers'
+import hash from '@adonisjs/core/services/hash'
+import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -12,6 +12,12 @@ const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
 
 export default class Usuario extends compose(BaseModel, AuthFinder) {
   public static table = 'usuarios'
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
+
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
 
   @column({ isPrimary: true })
   declare id: number
@@ -25,12 +31,6 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
   @column({ serializeAs: null })
   declare password: string
 
-  @column.dateTime({ autoCreate: true })
-  declare createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updatedAt: DateTime | null
-
   @column()
   declare cpf: string | null
 
@@ -38,7 +38,7 @@ export default class Usuario extends compose(BaseModel, AuthFinder) {
   declare endereco: string | null
 
   @column()
-  declare tipo: boolean | null
+  declare is_gerente: boolean | null
 
   static accessTokens = DbAccessTokensProvider.forModel(Usuario)
 }

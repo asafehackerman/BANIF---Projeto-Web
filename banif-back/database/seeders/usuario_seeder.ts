@@ -1,6 +1,6 @@
 import Usuario from '#models/usuario'
-import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import hash from '@adonisjs/core/services/hash'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 
 export default class extends BaseSeeder {
@@ -29,7 +29,7 @@ export default class extends BaseSeeder {
         cpf: '789.789.789-78',
         endereco: 'Avenida Central, 101, Paranaguá - PR',
         tipo: false
-      },               
+      },
       {
         username: 'Bananildo Silva',
         email: 'amobananasdeliciosas@banif.com',

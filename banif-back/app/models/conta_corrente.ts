@@ -1,36 +1,36 @@
-import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
+  import Usuario from '#models/usuario'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import Usuario from '#models/usuario'
+import { DateTime } from 'luxon'
 
-export default class ContaCorrente extends BaseModel {
-  public static table = 'contas_correntes'
-  
-  @column({ isPrimary: true })
-  declare contas_correntes_id: number
+  export default class ContaCorrente extends BaseModel {
+    public static table = 'contas_correntes'
 
-  @column()
-  declare contas_correntes_numero_conta: number
+    @column.dateTime({ autoCreate: true })
+    declare created_at: DateTime
 
-  @column()
-  declare contas_correntes_agencia: number
+    @column.dateTime({ autoCreate: true, autoUpdate: true })
+    declare updated_at: DateTime
+    
+    @column({ isPrimary: true })
+    declare contas_correntes_id: number
 
-  @column()
-  declare contas_correntes_saldo: number
+    @column()
+    declare usuario_id: number
 
-  @column()
-  declare contas_correntes_limite: number
+    @column()
+    declare numero_conta: number
 
-  @column()
-  declare usuario_id: number
+    @column()
+    declare agencia: number
 
-  @column.dateTime({ autoCreate: true })
-  declare created_at: DateTime
+    @column()
+    declare saldo: number
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  declare updated_at: DateTime
+    @column()
+    declare limite: number
 
-  // Relação com usuário
-  @belongsTo(() => Usuario, { foreignKey: 'usuario_id' })
-  declare usuario: BelongsTo<typeof Usuario>
-}
+    // Relação com usuário
+    @belongsTo(() => Usuario, { foreignKey: 'usuario_id' })
+    declare usuario: BelongsTo<typeof Usuario>
+  }
