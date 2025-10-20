@@ -1,29 +1,37 @@
-import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import ContaCorrente from '#models/conta_corrente'
+import { BaseSeeder } from '@adonisjs/lucid/seeders'
 
 export default class ContaCorrenteSeeder extends BaseSeeder {
   public async run() {
     await ContaCorrente.createMany([
       {
-        contas_correntes_numero_conta: 12345,
-        contas_correntes_agencia: 1,
-        contas_correntes_saldo: 10000,
-        contas_correntes_limite: 2000,
+        conta_corrente_id: 1,
+        numero_conta: "1.231-2",
+        agencia: "12.312-3",
+        saldo: 10000,
+        limite: 2000,
         usuario_id: 1,
       },
       {
-        contas_correntes_numero_conta: 67890,
-        contas_correntes_agencia: 2,
-        contas_correntes_saldo: 5000,
-        contas_correntes_limite: 1000,
+        numero_conta: "4.564-5",
+        agencia: "45.645-6",
+        saldo: 5000,
+        limite: 1000,
         usuario_id: 2,
       },
       {
-        contas_correntes_numero_conta: 11121,
-        contas_correntes_agencia: 3,
-        contas_correntes_saldo: 7500,
-        contas_correntes_limite: 1500,
+        numero_conta: "7.897-8",
+        agencia: "78.978-9",
+        saldo: 7500,
+        limite: 1500,
         usuario_id: 3,
+      },
+      {
+        numero_conta: "0.000-0",
+        agencia: "00.000-0",
+        saldo: 7500,
+        limite: 1500,
+        usuario_id: 4,
       },
     ])
   }

@@ -1,20 +1,15 @@
 // app/policies/transacao_policy.ts
+import ContaCorrente from '#models/conta_corrente'
 import Transacao from '#models/transacao'
 import Usuario from '#models/usuario'
 
 export default class TransacaoPolicy {
   // Visualizar transação
-  public async view(user: Usuario, transacao: Transacao) {
+  public async view(user: Usuario, transacao: Transacao, target: ContaCorrente) {
     if (user.is_gerente === true) return true
     return (
-      transacao.conta_origem_id === user.id ||
-      transacao.conta_destino_id === user.id
+      transacao.conta_origem_id === Number(target.conta_corrente_id) ||
+      transacao.conta_destino_id === Number(target.conta_corrente_id)
     )
   }
-
-  // Criar transação (transferência ou investimento)
-  public async create(user: Usuario, contaOrigemId: number) {
-    return user.is_gerente === true  || contaOrigemId === user.id
-  }
-
 }

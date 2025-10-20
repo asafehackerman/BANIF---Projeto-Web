@@ -7,8 +7,8 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.datetime('created_at').notNullable()
       table.datetime('updated_at').nullable()
-      table.increments('investimentos_id')
-      table.integer('conta_corrente_id').unsigned().notNullable().references('contas_correntes_id').inTable('contas_correntes').onDelete('CASCADE')
+      table.increments('investimento_id')
+      table.integer('conta_corrente_id').unsigned().notNullable().references('conta_corrente_id').inTable('contas_correntes').onDelete('CASCADE')
       
       
       table.string('tipo').notNullable()

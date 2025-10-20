@@ -22,3 +22,20 @@ export default class extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
+
+/* 
+SET FOREIGN_KEY_CHECKS = 0;
+DELETE FROM transacoes;
+DELETE FROM investimentos;
+DELETE FROM contas_correntes;
+DELETE FROM usuarios;
+SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE usuarios AUTO_INCREMENT = 1;
+ALTER TABLE contas_correntes AUTO_INCREMENT = 1;
+ALTER TABLE investimentos AUTO_INCREMENT = 1;
+ALTER TABLE transacoes AUTO_INCREMENT = 1;
+
+node ace db:seed --files database/seeders/usuario_seeder.ts
+node ace db:seed --files database/seeders/conta_corrente_seeder.ts
+*/

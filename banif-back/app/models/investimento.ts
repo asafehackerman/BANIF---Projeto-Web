@@ -11,7 +11,7 @@ export default class Investimento extends BaseModel {
   declare updated_at: DateTime
 
   @column({ isPrimary: true })
-  declare investimentos_id: number
+  declare investimento_id: number
 
   @column()
   declare conta_corrente_id: number

@@ -13,16 +13,16 @@ import { DateTime } from 'luxon'
     declare updated_at: DateTime
     
     @column({ isPrimary: true })
-    declare contas_correntes_id: number
+    declare conta_corrente_id: number
 
     @column()
     declare usuario_id: number
 
     @column()
-    declare numero_conta: number
+    declare numero_conta: string
 
     @column()
-    declare agencia: number
+    declare agencia: string
 
     @column()
     declare saldo: number
