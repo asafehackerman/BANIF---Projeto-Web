@@ -1,4 +1,5 @@
 import Usuario from '#models/usuario'
+import ContaCorrenteService from '#services/conta_corrente_service'
 import { loginValidator, registerValidator } from '#validators/auth'
 import type { HttpContext } from '@adonisjs/core/http'
 import { permissions } from '../utils/permissions.js'
@@ -8,23 +9,23 @@ export default class AuthController {
     try {
       const payload = await request.validateUsing(registerValidator)
 
-      // Formata o CPF: remove tudo que não é dígito e aplica a máscara 000.000.000-00
       if (payload.cpf) {
         const onlyDigits = String(payload.cpf).replace(/\D/g, '')
         payload.cpf = onlyDigits.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
       }
 
-      // Cria usuário usando apenas campos presentes no model
       const user = await Usuario.create({
         username: payload.username,
         email: payload.email,
         password: payload.password,
         cpf: payload.cpf,
-        endereco: payload.endereco, // front envia pronto
+        endereco: payload.endereco,
         is_gerente: payload.is_gerente ?? false,
       })
 
-      // Token de registro
+      // Cria automaticamente a conta corrente
+      const conta = await ContaCorrenteService.createForUser(user)
+
       const token = await Usuario.accessTokens.create(user, ['*'], {
         name: 'Registration Token',
         expiresIn: '30 days',
@@ -32,13 +33,7 @@ export default class AuthController {
 
       return response.created({
         message: 'Usuário registrado com sucesso',
-        user: {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          is_gerente: user.is_gerente,
-          createdAt: user.createdAt,
-        },
+        data: { user, conta_corrente: conta },
         token: {
           type: 'bearer',
           value: token.value!.release(),

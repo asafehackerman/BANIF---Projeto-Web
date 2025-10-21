@@ -14,6 +14,8 @@ export default class extends BaseSchema {
       table.string('tipo').notNullable()
       table.decimal('valor_investido', 12, 2).notNullable()
       table.date('data').notNullable()
+      table.boolean('resgatado').defaultTo(false) // novo campo
+      table.decimal('valor_resgatado', 12, 2).nullable() // novo campo
     })
   }
 
