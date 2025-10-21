@@ -18,12 +18,25 @@ import {
 export default function FormLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [load, setLoad] = useState(false);
   const [view, setView] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   function Authenticate() {
-    
+    const user = { email: email, password: password };
+    Client.post("/auth/login", user)
+      .then((res) => {
+        const userAuth = res.data;      
+        setUser(userAuth.user);
+        setDataUser(userAuth.user);
+        setToken(userAuth.token.value);
+        setPermissions(userAuth.permissions);
+        navigate("/home");
+      })
+      .catch(function (error) {
+        setView(true);
+        console.log(error);
+      })
   }
 
   return (
@@ -38,7 +51,6 @@ export default function FormLogin() {
         name="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        disabled={load}
       />
 
       <Label>Senha</Label>
@@ -47,7 +59,6 @@ export default function FormLogin() {
         name="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        disabled={load}
       />
 
       {view && (
